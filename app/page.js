@@ -5,9 +5,9 @@ import { useState, useRef, useEffect } from 'react';
 const AUDIO_DATA = [
   {
     id: 1,
-    title: 'Matsalu metsaniit',
+    title: 'Matsalu rannaniit',
     imageUrl: '/images/matsalulambad.webp', 
-    text: 'Matsalu metsaniit lammaste, kellade ja lindudega.',
+    text: 'Matsalu rannaniit lammaste, kellade ja lindudega.',
     audioUrl: '/audio/matsalu_rannaniit.mp3'
   },
   {
