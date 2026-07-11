@@ -7,14 +7,14 @@ const AUDIO_DATA = [
     id: 1,
     title: 'Matsalu rannaniit',
     imageUrl: '/images/matsalulambad.webp', 
-    text: 'Matsalu rannaniit lammaste, kellade ja lindudega.',
+    text: 'Karjakell Matsalu rannaniidul.',
     audioUrl: '/audio/matsalu_rannaniit.mp3'
   },
   {
     id: 2,
-    title: 'Kohila vihm',
+    title: 'Kohila äikesevihm',
     imageUrl: '/images/kohilavihm.webp',
-    text: 'Vihm kohilas, müristamiste ja metsaga.',
+    text: 'Kohila äikesevihm.',
     audioUrl: '/audio/kohila_vihm.mp3'
   }
 ];
