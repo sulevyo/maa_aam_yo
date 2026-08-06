@@ -101,7 +101,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-bl from-slate-900 to-slate-700 font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-b from-black via-zinc-900 to-neutral-900 font-sans flex flex-col items-center">
       
       <header className="w-full max-w-xl flex justify-center items-center px-6 py-8">
         <img src="/images/logo.svg" alt="Logo" className="h-10 w-auto opacity-90 drop-shadow-md" />
