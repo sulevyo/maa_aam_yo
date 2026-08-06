@@ -17,6 +17,13 @@ const AUDIO_DATA = [
     text: 'Kohila äikesevihm.',
     audioUrl: '/audio/kohila_vihm.mp3'
   }
+  {
+    id: 3,
+    title: 'Kõnnujärve siristajad',
+    imageUrl: '/images/k6nnuj2rve_p6llul.webp',
+    text: 'Kõnnujärve siristajad.',
+    audioUrl: '/audio/k6nnuj2rve_p6llul.mp3'
+  }
 ];
 
 export default function Home() {
