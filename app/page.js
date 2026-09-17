@@ -30,7 +30,6 @@ export default function Home() {
   const [activeItem, setActiveItem] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
-  
   const [isLooping, setIsLooping] = useState(false); 
   
   const audioRef = useRef(null);
@@ -55,14 +54,14 @@ export default function Home() {
         });
       }
     } catch (e) {
-      console.log("MediaSession viga seadmes:", e);
+      console.log("MediaSession viga:", e);
     }
   }, [activeItem]);
 
   const handleOpen = (item) => {
     setActiveItem(item);
     setIsPlaying(false);
-    setIsLoadingAudio(false);
+    setIsLoadingAudio(true);
     
     if (audioRef.current) {
       audioRef.current.pause();
@@ -94,45 +93,60 @@ export default function Home() {
           setIsLoadingAudio(false);
         })
         .catch(err => {
-          console.log("Esituse tõrge seadmes:", err);
+          console.log("Esituse tõrge:", err);
           setIsLoadingAudio(false);
         });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-zinc-900 to-neutral-900 font-sans flex flex-col items-center">
+    // snap-y snap-mandatory paneb kerimise kaartide külge lukustuma
+    <div className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans">
       
-      <header className="w-full max-w-xl flex justify-center items-center px-6 py-8">
-        <img src="/images/logo.svg" alt="Logo" className="h-10 w-auto opacity-90 drop-shadow-md" />
+      {/* Fikseeritud logo ülal servas */}
+      <header className="fixed top-0 left-0 w-full z-40 flex justify-center items-center py-6 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+        <img src="/images/logo.svg" alt="Logo" className="h-8 w-auto opacity-90 drop-shadow-md pointer-events-auto" />
       </header>
 
-      <main className="w-full max-w-xl px-6 pb-12 grid grid-cols-1 sm:grid-cols-2 gap-8 flex-1 items-start">
+      {/* Kaartide nimekiri */}
+      <main className="w-full">
         {AUDIO_DATA.map((item) => (
-          <button 
+          <section 
             key={item.id} 
-            onClick={() => handleOpen(item)}
-            type="button"
-            className="flex flex-col h-fit text-left space-y-3 w-full appearance-none bg-transparent border-0 p-0 outline-none block cursor-pointer group"
-            style={{ WebkitTapHighlightColor: 'transparent' }}
+            className="w-full h-screen snap-start snap-always relative flex items-end justify-center pb-20 px-6"
           >
-            <div className="w-full aspect-square bg-white/10 rounded-2xl overflow-hidden shadow-xl border border-white/20">
+            {/* Taustapilt üle terve ekraani */}
+            <div className="absolute inset-0 z-0">
               <img 
                 src={item.imageUrl} 
                 alt={item.title} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                className="w-full h-full object-cover opacity-65"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
             </div>
-            <p className="text-sm text-slate-200 sm:text-slate-100 font-medium leading-relaxed px-1 drop-shadow-sm">
-              {item.text}
-            </p>
-          </button>
+
+            {/* Sisu (tekst ja nupp) */}
+            <div className="relative z-10 w-full max-w-md flex flex-col items-center text-center space-y-4">
+              <h2 className="text-2xl font-semibold text-white drop-shadow-md">{item.title}</h2>
+              <p className="text-sm text-slate-300 max-w-xs leading-relaxed drop-shadow-sm">
+                {item.text}
+              </p>
+              
+              <button
+                onClick={() => handleOpen(item)}
+                type="button"
+                className="mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium px-8 py-3 rounded-full border border-white/20 transition-all active:scale-95 cursor-pointer"
+              >
+                Mängi helifaili
+              </button>
+            </div>
+          </section>
         ))}
       </main>
 
+      {/* Audiopleieri Modal */}
       {activeItem && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black">
-          
           <img 
             src={activeItem.imageUrl} 
             className="absolute inset-0 w-full h-full object-cover opacity-50" 
@@ -143,7 +157,6 @@ export default function Home() {
             onClick={handleClose}
             type="button"
             className="absolute top-6 right-6 text-white/70 hover:text-white p-4 focus:outline-none z-20 transition-colors"
-            style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
@@ -151,12 +164,10 @@ export default function Home() {
           </button>
 
           <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md px-6">
-            
             <button 
               onClick={togglePlay}
               type="button"
               className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shadow-2xl border border-white/10 focus:outline-none transition-transform active:scale-90"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               {isLoadingAudio ? (
                 <svg className="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
@@ -184,7 +195,6 @@ export default function Home() {
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
                   isLooping ? 'bg-white/80' : 'bg-white/20'
                 }`}
-                style={{ WebkitTapHighlightColor: 'transparent' }}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full transition-transform bg-white ${
@@ -203,8 +213,9 @@ export default function Home() {
 
       <audio 
         ref={audioRef} 
-        preload="none" 
+        preload="auto" 
         loop={isLooping} 
+        onCanPlayThrough={() => setIsLoadingAudio(false)}
         onPlay={() => setIsLoadingAudio(false)}
         onWaiting={() => setIsLoadingAudio(true)}
         onPlaying={() => setIsLoadingAudio(false)}
@@ -212,7 +223,9 @@ export default function Home() {
           setIsPlaying(false);
           setIsLoadingAudio(false);
         }}
-      />
+      >
+        {activeItem && <source src={activeItem.audioUrl} type="audio/mpeg" />}
+      </audio>
     </div>
   );
 }
