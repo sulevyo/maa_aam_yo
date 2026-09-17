@@ -137,7 +137,7 @@ export default function Home() {
                 type="button"
                 className="mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium px-8 py-3 rounded-full border border-white/20 transition-all active:scale-95 cursor-pointer"
               >
-                Mängi helifaili
+                Ava
               </button>
             </div>
           </section>
