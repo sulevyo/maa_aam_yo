@@ -22,7 +22,7 @@ const AUDIO_DATA = [
     title: 'Kõnnujärve siristajad',
     imageUrl: '/images/k6nnuj2rve_p6llul.webp',
     text: 'Kõnnujärve siristajad.',
-    audioUrl: '/audio/k6nnuj2rve_p6llul.mp3'
+    audioUrl: '/audio/k6nnuj2rve_p6llu_siristajad.mp3'
   }
 ];
 
