@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Maa.aam",
-  description: "Original ambients sounds from Estonia",
+  title: "maa.aam",
+  description: "Original sounds from Estonia",
 };
 
 export default function RootLayout({ children }) {
