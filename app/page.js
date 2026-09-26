@@ -23,6 +23,13 @@ const AUDIO_DATA = [
     imageUrl: '/images/k6nnuj2rve_p6llul.webp',
     text: 'Kõnnujärve siristajad.',
     audioUrl: '/audio/k6nnuj2rve_p6llu_siristajad.mp3'
+  },
+  {
+    id: 4,
+    title: 'Lobi käbid',
+    imageUrl: '/images/lobik2bi.webp',
+    text: 'Käbid Lobil, salvestatud suvel 2026',
+    audioUrl: '/audio/lobik2bi.mp3'
   }
 ];
 
