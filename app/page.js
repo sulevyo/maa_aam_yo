@@ -5,30 +5,30 @@ import { useState, useRef, useEffect } from 'react';
 const AUDIO_DATA = [
   {
     id: 1,
-    title: 'Matsalu rannaniit',
+    title: 'Matsalu coastal meadow',
     imageUrl: '/images/matsalulambad.webp', 
-    text: 'Karjakell Matsalu rannaniidul.',
+    text: 'Sheepbells ringing in anticipation of evening. June 2026',
     audioUrl: '/audio/matsalu_rannaniit.mp3'
   },
   {
     id: 2,
-    title: 'Kohila äikesevihm',
+    title: 'Kohila thunderstorm',
     imageUrl: '/images/kohilavihm.webp',
-    text: 'Kohila äikesevihm.',
+    text: 'A grounding creation of nature. June 2026',
     audioUrl: '/audio/kohila_vihm.mp3'
   },
   {
     id: 3,
-    title: 'Kõnnujärve siristajad',
+    title: 'The chirpers of Kõnnu bog',
     imageUrl: '/images/k6nnuj2rve_p6llul.webp',
-    text: 'Kõnnujärve siristajad.',
+    text: 'Childhood memories of a summer day´s idyll in meadow. August 2026',
     audioUrl: '/audio/k6nnuj2rve_p6llu_siristajad.mp3'
   },
   {
     id: 4,
-    title: 'Lobi käbid',
+    title: 'Pine cones by the Lobi shore',
     imageUrl: '/images/lobik2bi.webp',
-    text: 'Käbid Lobil, salvestatud suvel 2026',
+    text: 'By the sea is the crackle of pine cones popping open in the warm sun. July 2026',
     audioUrl: '/audio/lobik2bi.mp3'
   }
 ];
