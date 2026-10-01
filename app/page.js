@@ -147,19 +147,23 @@ export default function Home() {
         <img src="/images/logo.svg" alt="Logo" className="h-8 w-auto opacity-90 drop-shadow-md pointer-events-auto" />
       </header>
 
-      {/* Paremas servas olevad mumutid / täpid */}
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col space-y-3 bg-black/30 p-2 rounded-full backdrop-blur-sm border border-white/10">
+{/* Paremas servas olevad mummud / täpid */}
+<div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center space-y-4">
         {AUDIO_DATA.map((_, idx) => (
           <button
             key={idx}
             onClick={() => scrollToIndex(idx)}
             aria-label={`Slaid ${idx + 1}`}
-            className={`transition-all duration-300 rounded-full cursor-pointer ${
-              activeIndex === idx 
-                ? 'w-3 h-3 bg-white scale-125 shadow-[0_0_8px_rgba(255,255,255,0.8)]' 
-                : 'w-2 h-2 bg-white/40 hover:bg-white/70'
-            }`}
-          />
+            className="w-5 h-5 flex items-center justify-center cursor-pointer focus:outline-none"
+          >
+            <span
+              className={`block rounded-full transition-all duration-300 ${
+                activeIndex === idx
+                  ? 'w-3 h-3 bg-white scale-125 shadow-[0_0_10px_rgba(255,255,255,0.9)]'
+                  : 'w-2 h-2 bg-white/40 hover:bg-white/80'
+              }`}
+            />
+          </button>
         ))}
       </div>
 
@@ -192,7 +196,7 @@ export default function Home() {
                 type="button"
                 className="mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium px-8 py-3 rounded-full border border-white/20 transition-all active:scale-95 cursor-pointer"
               >
-                Mängi helifaili
+                Ava
               </button>
             </div>
 
