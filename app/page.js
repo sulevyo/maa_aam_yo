@@ -33,13 +33,35 @@ const AUDIO_DATA = [
   }
 ];
 
+
 export default function Home() {
   const [activeItem, setActiveItem] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
   const [isLooping, setIsLooping] = useState(false); 
-  
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const audioRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Jälgime kerimist, et teada saada mis kaart on ekraanil
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const height = window.innerHeight;
+      const scrollTop = containerRef.current.scrollTop;
+      const index = Math.round(scrollTop / height);
+      setActiveIndex(index);
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (container) container.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -106,18 +128,44 @@ export default function Home() {
     }
   };
 
+  const scrollToIndex = (index) => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: index * window.innerHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    // snap-y snap-mandatory paneb kerimise kaartide külge lukustuma
-    <div className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans">
-      
+    <div 
+      ref={containerRef}
+      className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans relative"
+    >
       {/* Fikseeritud logo ülal servas */}
       <header className="fixed top-0 left-0 w-full z-40 flex justify-center items-center py-6 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
         <img src="/images/logo.svg" alt="Logo" className="h-8 w-auto opacity-90 drop-shadow-md pointer-events-auto" />
       </header>
 
+      {/* Paremas servas olevad mumutid / täpid */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col space-y-3 bg-black/30 p-2 rounded-full backdrop-blur-sm border border-white/10">
+        {AUDIO_DATA.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => scrollToIndex(idx)}
+            aria-label={`Slaid ${idx + 1}`}
+            className={`transition-all duration-300 rounded-full cursor-pointer ${
+              activeIndex === idx 
+                ? 'w-3 h-3 bg-white scale-125 shadow-[0_0_8px_rgba(255,255,255,0.8)]' 
+                : 'w-2 h-2 bg-white/40 hover:bg-white/70'
+            }`}
+          />
+        ))}
+      </div>
+
       {/* Kaartide nimekiri */}
       <main className="w-full">
-        {AUDIO_DATA.map((item) => (
+        {AUDIO_DATA.map((item, index) => (
           <section 
             key={item.id} 
             className="w-full h-screen snap-start snap-always relative flex items-end justify-center pb-20 px-6"
@@ -144,9 +192,18 @@ export default function Home() {
                 type="button"
                 className="mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium px-8 py-3 rounded-full border border-white/20 transition-all active:scale-95 cursor-pointer"
               >
-                Ava
+                Mängi helifaili
               </button>
             </div>
+
+            {/* Väike allapoole vihjav nool ainult esimesel kaardil */}
+            {index === 0 && (
+              <div className="absolute bottom-6 z-10 animate-bounce opacity-60">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            )}
           </section>
         ))}
       </main>
