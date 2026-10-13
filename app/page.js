@@ -89,13 +89,24 @@ export default function Home() {
 
   const handleOpen = (item) => {
     setActiveItem(item);
-    setIsPlaying(false);
     setIsLoadingAudio(true);
+    setIsPlaying(true); // Seame oleku kohe mängivaks
     
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = item.audioUrl;
       audioRef.current.load();
+      
+      // Paneme heli kohe automaatselt mängima
+      audioRef.current.play()
+        .then(() => {
+          setIsLoadingAudio(false);
+        })
+        .catch(err => {
+          console.log("Automaatse esituse tõrge:", err);
+          setIsPlaying(false);
+          setIsLoadingAudio(false);
+        });
     }
   };
 
