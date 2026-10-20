@@ -92,9 +92,11 @@ export default function Home() {
     setActiveItem(item);
     setIsLoadingAudio(true);
     setIsPlaying(true);
-
-    track('Audio Played', { title: item.title, id: item.id });
     
+    track(`Play: ${item.title}`);
+    
+    track('Audio Played', { title: item.title, id: String(item.id) });
+
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = item.audioUrl;
