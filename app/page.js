@@ -20,17 +20,24 @@ const AUDIO_DATA = [
   },
   {
     id: 3,
+    title: 'Lobi küla merekohin',
+    imageUrl: '/images/lobik2bi.webp',
+    text: 'juuli 2026',
+    audioUrl: '/audio/lobik2bi.mp3'
+  },
+  {
+    id: 4,
     title: 'Kõnnujärve siristajad',
     imageUrl: '/images/k6nnuj2rve_p6llul.webp',
     text: 'august 2026',
     audioUrl: '/audio/k6nnuj2rve_p6llu_siristajad.mp3'
   },
   {
-    id: 4,
-    title: 'Lobi küla merekohin',
-    imageUrl: '/images/lobik2bi.webp',
-    text: 'juuli 2026',
-    audioUrl: '/audio/lobik2bi.mp3'
+    id: 5,
+    title: 'Mustoja varahommik',
+    imageUrl: '/images/mustoja.webp',
+    text: 'august 2026',
+    audioUrl: '/audio/mustoja.mp3'
   }
 ];
 
