@@ -1,5 +1,6 @@
 'use client';
 
+import { Analytics, track } from '@vercel/analytics/react';
 import { useState, useRef, useEffect } from 'react';
 
 const AUDIO_DATA = [
@@ -90,14 +91,15 @@ export default function Home() {
   const handleOpen = (item) => {
     setActiveItem(item);
     setIsLoadingAudio(true);
-    setIsPlaying(true); // Seame oleku kohe mängivaks
+    setIsPlaying(true);
+
+    track('Audio Played', { title: item.title, id: item.id });
     
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = item.audioUrl;
       audioRef.current.load();
       
-      // Paneme heli kohe automaatselt mängima
       audioRef.current.play()
         .then(() => {
           setIsLoadingAudio(false);
@@ -305,6 +307,7 @@ export default function Home() {
       >
         {activeItem && <source src={activeItem.audioUrl} type="audio/mpeg" />}
       </audio>
+      <Analytics/>
     </div>
   );
 }

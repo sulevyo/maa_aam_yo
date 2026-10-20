@@ -16,11 +16,15 @@ export const metadata = {
   description: "Original sounds from Estonia",
 };
 
+export const viewport = {
+  themeColor: "#000000",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="et">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
         {children}
       </body>
