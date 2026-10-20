@@ -1,39 +1,40 @@
 'use client';
 
-import { Analytics, track } from '@vercel/analytics/react';
-import { useState, useRef, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import { useState, useRef, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const AUDIO_DATA = [
   {
-    id: 1,
+    id: 'matsalu-rannaniidud',
     title: 'Matsalu rannaniidu karjakellad',
     imageUrl: '/images/matsalulambad.webp', 
     text: 'juuni 2026',
     audioUrl: '/audio/matsalu_rannaniit.mp3'
   },
   {
-    id: 2,
+    id: 'kohila-vihmavaling',
     title: 'Kohila vihmavaling',
     imageUrl: '/images/kohilavihm.webp',
     text: 'juuni 2026',
     audioUrl: '/audio/kohila_vihm.mp3'
   },
   {
-    id: 3,
+    id: 'lobi-kula-merekohin',
     title: 'Lobi küla merekohin',
     imageUrl: '/images/lobik2bi.webp',
     text: 'juuli 2026',
     audioUrl: '/audio/lobik2bi.mp3'
   },
   {
-    id: 4,
+    id: 'konnujarve-siristajad',
     title: 'Kõnnujärve siristajad',
     imageUrl: '/images/k6nnuj2rve_p6llul.webp',
     text: 'august 2026',
     audioUrl: '/audio/k6nnuj2rve_p6llu_siristajad.mp3'
   },
   {
-    id: 5,
+    id: 'mustoja-varahommik',
     title: 'Mustoja varahommik',
     imageUrl: '/images/mustoja.webp',
     text: 'august 2026',
@@ -41,8 +42,11 @@ const AUDIO_DATA = [
   }
 ];
 
+function MainContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const trackParam = searchParams.get('track');
 
-export default function Home() {
   const [activeItem, setActiveItem] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
@@ -51,6 +55,24 @@ export default function Home() {
 
   const audioRef = useRef(null);
   const containerRef = useRef(null);
+
+  // Kontrollime URL-i parameetrit ?track=ID
+  useEffect(() => {
+    if (trackParam) {
+      const item = AUDIO_DATA.find((a) => String(a.id) === String(trackParam));
+      if (item) {
+        setActiveItem(item);
+        setIsPlaying(true);
+        setIsLoadingAudio(true);
+      }
+    } else {
+      setActiveItem(null);
+      setIsPlaying(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    }
+  }, [trackParam]);
 
   // Jälgime kerimist, et teada saada mis kaart on ekraanil
   useEffect(() => {
@@ -96,38 +118,13 @@ export default function Home() {
   }, [activeItem]);
 
   const handleOpen = (item) => {
-    setActiveItem(item);
-    setIsLoadingAudio(true);
-    setIsPlaying(true);
-    
-    track(`Play: ${item.title}`);
-    
-    track('Audio Played', { title: item.title, id: String(item.id) });
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = item.audioUrl;
-      audioRef.current.load();
-      
-      audioRef.current.play()
-        .then(() => {
-          setIsLoadingAudio(false);
-        })
-        .catch(err => {
-          console.log("Automaatse esituse tõrge:", err);
-          setIsPlaying(false);
-          setIsLoadingAudio(false);
-        });
-    }
+    // Lisame URL-i parameetri (nt ?track=matsalu-rannaniidud)
+    router.push(`/?track=${item.id}`, { scroll: false });
   };
 
   const handleClose = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    setActiveItem(null);
-    setIsPlaying(false);
-    setIsLoadingAudio(false);
+    // Eemaldame URL-ist parameetri kui pleier suletakse
+    router.push('/', { scroll: false });
   };
 
   const togglePlay = () => {
@@ -169,8 +166,8 @@ export default function Home() {
         <img src="/images/logo.svg" alt="Logo" className="h-8 w-auto opacity-90 drop-shadow-md pointer-events-auto" />
       </header>
 
-{/* Paremas servas olevad mummud / täpid */}
-<div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center space-y-4">
+      {/* Paremas servas olevad mummud / täpid */}
+      <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center space-y-4">
         {AUDIO_DATA.map((_, idx) => (
           <button
             key={idx}
@@ -304,6 +301,7 @@ export default function Home() {
       <audio 
         ref={audioRef} 
         preload="auto" 
+        autoPlay
         loop={isLooping} 
         onCanPlayThrough={() => setIsLoadingAudio(false)}
         onPlay={() => setIsLoadingAudio(false)}
@@ -316,7 +314,16 @@ export default function Home() {
       >
         {activeItem && <source src={activeItem.audioUrl} type="audio/mpeg" />}
       </audio>
-      <Analytics/>
+
+      <Analytics />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="h-screen w-screen bg-black" />}>
+      <MainContent />
+    </Suspense>
   );
 }
