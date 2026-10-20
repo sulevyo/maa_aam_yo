@@ -56,25 +56,51 @@ function MainContent() {
   const audioRef = useRef(null);
   const containerRef = useRef(null);
 
-  // Kontrollime URL-i parameetrit ?track=ID
+  // 1. Jälgime URL-i parameetrit ?track=ID
   useEffect(() => {
     if (trackParam) {
       const item = AUDIO_DATA.find((a) => String(a.id) === String(trackParam));
       if (item) {
         setActiveItem(item);
-        setIsPlaying(true);
-        setIsLoadingAudio(true);
       }
     } else {
       setActiveItem(null);
       setIsPlaying(false);
+      setIsLoadingAudio(false);
       if (audioRef.current) {
         audioRef.current.pause();
       }
     }
   }, [trackParam]);
 
-  // Jälgime kerimist, et teada saada mis kaart on ekraanil
+  // 2. HELI MÄNGIMINE: Kui activeItem muutub, laeme ja käivitame audio kindlalt
+  useEffect(() => {
+    if (!activeItem || !audioRef.current) return;
+
+    const audio = audioRef.current;
+    setIsLoadingAudio(true);
+    setIsPlaying(true);
+
+    audio.pause();
+    audio.src = activeItem.audioUrl;
+    audio.load();
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsLoadingAudio(false);
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Automaatse esituse tõrge (brauseri piirang):", err);
+          setIsLoadingAudio(false);
+          setIsPlaying(false);
+        });
+    }
+  }, [activeItem]);
+
+  // Jälgime kerimist mummude jaoks
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -93,6 +119,7 @@ function MainContent() {
     };
   }, []);
 
+  // MediaSession seadistus
   useEffect(() => {
     try {
       if (typeof window !== 'undefined' && 'mediaSession' in navigator && window.MediaMetadata && activeItem) {
@@ -118,12 +145,14 @@ function MainContent() {
   }, [activeItem]);
 
   const handleOpen = (item) => {
-    // Lisame URL-i parameetri (nt ?track=matsalu-rannaniidud)
+    // Kui vajutatakse nuppu, siis uuendame URL-i parameetrit
     router.push(`/?track=${item.id}`, { scroll: false });
   };
 
   const handleClose = () => {
-    // Eemaldame URL-ist parameetri kui pleier suletakse
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
     router.push('/', { scroll: false });
   };
 
@@ -298,10 +327,10 @@ function MainContent() {
         </div>
       )}
 
+      {/* Audiokomponent ilma dünaamilise child source tagita, mida uuendatakse otse ref abil */}
       <audio 
         ref={audioRef} 
         preload="auto" 
-        autoPlay
         loop={isLooping} 
         onCanPlayThrough={() => setIsLoadingAudio(false)}
         onPlay={() => setIsLoadingAudio(false)}
@@ -311,9 +340,7 @@ function MainContent() {
           setIsPlaying(false);
           setIsLoadingAudio(false);
         }}
-      >
-        {activeItem && <source src={activeItem.audioUrl} type="audio/mpeg" />}
-      </audio>
+      />
 
       <Analytics />
     </div>
