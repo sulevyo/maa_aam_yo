@@ -16,8 +16,8 @@ export const metadata = {
   description: "Minimalistlik audiopleier Eesti loodushelidega. Ideaalne taust meditatsiooniks, keskendumiseks, joogaks ja lõõgastumiseks.",
   keywords: "loodushelid, ambient, meditatsioonitaust, vihmavaling, linnulaul, Eesti loodus, helid magamiseks, taustaheli",
   openGraph: {
-    title: "MAA.AAM — Eesti loodushelid",
-    description: "Kvaliteetsed loodushelid Matsalust, Kohilast ja mujalt. Kuula rahu.",
+    title: "maa.aam — eesti loodushelid",
+    description: "Kuula rahu.",
     url: "https://maaaam.ee",
     siteName: "MAA.AAM",
     images: [
