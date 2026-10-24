@@ -73,7 +73,7 @@ function MainContent() {
     }
   }, [trackParam]);
 
-  // 2. HELI MÄNGIMINE: Kui activeItem muutub, laeme ja käivitame audio kindlalt
+  // 2. HELI MÄNGIMINE
   useEffect(() => {
     if (!activeItem || !audioRef.current) return;
 
@@ -145,7 +145,6 @@ function MainContent() {
   }, [activeItem]);
 
   const handleOpen = (item) => {
-    // Kui vajutatakse nuppu, siis uuendame URL-i parameetrit
     router.push(`/?track=${item.id}`, { scroll: false });
   };
 
@@ -188,22 +187,19 @@ function MainContent() {
   return (
     <div 
       ref={containerRef}
-      className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans relative"
+      className="h-screen w-full overflow-x-hidden overflow-y-scroll snap-y snap-mandatory font-sans relative bg-black text-white"
     >
-    
-{/* Fikseeritud header - ulatub kindlalt servast servani ja leebema gradaiendiga */}
-<header className="fixed top-0 left-0 w-screen z-40 flex justify-between items-center px-6 sm:px-12 py-5 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none">
-        {/* Vasak serv - hoiab logo keskel tasakaalus */}
-        <div className="w-20 flex items-center justify-start pointer-events-auto" />
-
+      {/* Fikseeritud header - grid paigutus hoiab ikoonid ja logo alati ideaalselt paigas */}
+      <header className="fixed top-0 left-0 right-0 w-full z-40 grid grid-cols-3 items-center px-6 sm:px-10 py-5 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none">
+        <div /> {/* Vasak tühi lahter tasakaaluks */}
+        
         {/* Logo keskel */}
-        <div className="flex items-center justify-center pointer-events-auto">
+        <div className="flex justify-center pointer-events-auto">
           <img src="/images/logo.svg" alt="Logo" className="h-7 sm:h-8 w-auto opacity-95 drop-shadow-md block" />
         </div>
 
         {/* Sotsiaalmeedia ikoonid paremal */}
-        <div className="flex items-center space-x-4 w-20 justify-end pointer-events-auto">
-          {/* Instagram */}
+        <div className="flex items-center justify-end space-x-4 pointer-events-auto">
           <a
             href="https://www.instagram.com/maa.aam.official/"
             target="_blank"
@@ -216,7 +212,6 @@ function MainContent() {
             </svg>
           </a>
 
-          {/* YouTube */}
           <a
             href="https://www.youtube.com/@maa.aam.official"
             target="_blank"
@@ -231,6 +226,7 @@ function MainContent() {
         </div>
       </header>
 
+      {/* Paremas servas olevad mummud */}
       <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center space-y-4">
         {AUDIO_DATA.map((_, idx) => (
           <button
@@ -257,7 +253,6 @@ function MainContent() {
             key={item.id} 
             className="w-full h-screen snap-start snap-always relative flex items-end justify-center pb-20 px-6"
           >
-            {/* Taustapilt üle terve ekraani */}
             <div className="absolute inset-0 z-0">
               <img 
                 src={item.imageUrl} 
@@ -267,7 +262,6 @@ function MainContent() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
             </div>
 
-            {/* Sisu (tekst ja nupp) */}
             <div className="relative z-10 w-full max-w-md flex flex-col items-center text-center space-y-4">
               <h2 className="text-2xl font-semibold text-white drop-shadow-md">{item.title}</h2>
               <p className="text-sm text-slate-300 max-w-xs leading-relaxed drop-shadow-sm">
@@ -283,7 +277,6 @@ function MainContent() {
               </button>
             </div>
 
-            {/* Väike allapoole vihjav nool ainult esimesel kaardil */}
             {index === 0 && (
               <div className="absolute bottom-6 z-10 animate-bounce opacity-60">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -362,7 +355,6 @@ function MainContent() {
         </div>
       )}
 
-      {/* Audiokomponent ilma dünaamilise child source tagita, mida uuendatakse otse ref abil */}
       <audio 
         ref={audioRef} 
         preload="auto" 
