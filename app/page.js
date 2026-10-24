@@ -191,10 +191,10 @@ function MainContent() {
       className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans relative"
     >
     
-{/* Fikseeritud header koos logo ja sotsiaalmeedia ikoonidega */}
-<header className="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-6 py-6 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+{/* Fikseeritud header - ulatub 100% servast servani ka landscape režiimis */}
+<header className="fixed top-0 left-0 right-0 w-full z-40 flex justify-between items-center px-6 sm:px-10 py-6 bg-gradient-to-b from-black via-black/80 to-transparent pointer-events-none">
         {/* Vasak serv - hoiab logo keskel tasakaalus */}
-        <div className="w-16 flex items-center justify-start pointer-events-auto" />
+        <div className="w-20 flex items-center justify-start pointer-events-auto" />
 
         {/* Logo keskel */}
         <div className="flex items-center justify-center pointer-events-auto">
@@ -202,7 +202,7 @@ function MainContent() {
         </div>
 
         {/* Sotsiaalmeedia ikoonid paremal */}
-        <div className="flex items-center space-x-3 w-16 justify-end pointer-events-auto">
+        <div className="flex items-center space-x-4 w-20 justify-end pointer-events-auto">
           {/* Instagram */}
           <a
             href="https://www.instagram.com/maa.aam.official/"
