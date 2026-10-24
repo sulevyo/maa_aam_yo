@@ -191,14 +191,14 @@ function MainContent() {
       className="h-screen w-screen bg-black text-white overflow-y-scroll snap-y snap-mandatory font-sans relative"
     >
     
-{/* Fikseeritud header - ulatub 100% servast servani ka landscape režiimis */}
-<header className="fixed top-0 left-0 right-0 w-full z-40 flex justify-between items-center px-6 sm:px-10 py-6 bg-gradient-to-b from-black via-black/80 to-transparent pointer-events-none">
+{/* Fikseeritud header - ulatub kindlalt servast servani ja leebema gradaiendiga */}
+<header className="fixed top-0 left-0 w-screen z-40 flex justify-between items-center px-6 sm:px-12 py-5 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none">
         {/* Vasak serv - hoiab logo keskel tasakaalus */}
         <div className="w-20 flex items-center justify-start pointer-events-auto" />
 
         {/* Logo keskel */}
         <div className="flex items-center justify-center pointer-events-auto">
-          <img src="/images/logo.svg" alt="Logo" className="h-8 w-auto opacity-90 drop-shadow-md block" />
+          <img src="/images/logo.svg" alt="Logo" className="h-7 sm:h-8 w-auto opacity-95 drop-shadow-md block" />
         </div>
 
         {/* Sotsiaalmeedia ikoonid paremal */}
@@ -231,7 +231,6 @@ function MainContent() {
         </div>
       </header>
 
-      {/* Paremas servas olevad mummud / täpid */}
       <div className="fixed right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center space-y-4">
         {AUDIO_DATA.map((_, idx) => (
           <button
