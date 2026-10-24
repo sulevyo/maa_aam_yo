@@ -12,8 +12,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "maa.aam",
-  description: "Original sounds from Estonia",
+  title: "MAA.AAM — Eesti loodushelid ja ambient taust",
+  description: "Minimalistlik audiopleier Eesti loodushelidega. Ideaalne taust meditatsiooniks, keskendumiseks, joogaks ja lõõgastumiseks.",
+  keywords: "loodushelid, ambient, meditatsioonitaust, vihmavaling, linnulaul, Eesti loodus, helid magamiseks, taustaheli",
+  openGraph: {
+    title: "MAA.AAM — Eesti loodushelid",
+    description: "Kvaliteetsed loodushelid Matsalust, Kohilast ja mujalt. Kuula rahu.",
+    url: "https://maaaam.ee",
+    siteName: "MAA.AAM",
+    images: [
+      {
+        url: "https://maaaam.ee/images/matsalulambad.webp", 
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "et_EE",
+    type: "website",
+  },
 };
 
 export const viewport = {
