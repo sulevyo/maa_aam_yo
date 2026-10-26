@@ -53,6 +53,13 @@ function MainContent() {
   const [isLooping, setIsLooping] = useState(false); 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const logoVariants = ['/images/logo.svg', '/images/logo2.svg', '/images/logo3.svg'];
+  const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+
+  const handleLogoClick = () => {
+    setCurrentLogoIndex((prevIndex) => (prevIndex + 1) % logoVariants.length);
+  };
+
   const audioRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -189,13 +196,16 @@ function MainContent() {
       ref={containerRef}
       className="h-screen w-full overflow-x-hidden overflow-y-scroll snap-y snap-mandatory font-sans relative bg-black text-white"
     >
-      {/* Fikseeritud header - grid paigutus hoiab ikoonid ja logo alati ideaalselt paigas */}
       <header className="fixed top-0 left-0 right-0 w-full z-40 grid grid-cols-3 items-center px-6 sm:px-10 py-5 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none">
         <div /> {/* Vasak tühi lahter tasakaaluks */}
         
-        {/* Logo keskel */}
         <div className="flex justify-center pointer-events-auto">
-          <img src="/images/logo.svg" alt="Logo" className="h-7 sm:h-8 w-auto opacity-95 drop-shadow-md block" />
+          <img 
+            src={logoVariants[currentLogoIndex]} 
+            alt="Logo" 
+            onClick={handleLogoClick}
+            className="h-7 sm:h-8 w-auto opacity-95 drop-shadow-md block select-none" 
+          />
         </div>
 
         {/* Sotsiaalmeedia ikoonid paremal */}
