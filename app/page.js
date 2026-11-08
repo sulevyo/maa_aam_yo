@@ -17,7 +17,7 @@ const AUDIO_DATA = [
     title: 'Matsalu rannaniidu karjakellad',
     imageUrl: '/images/matsalulambad.webp',
     date: 'juuni 2026',
-    note: '', // valikuline: lühike kirjeldus, kuvatakse pleieris
+    note: '',
     audioUrl: '/audio/matsalu_rannaniit.mp3',
   },
   {
@@ -25,7 +25,7 @@ const AUDIO_DATA = [
     title: 'Kohila vihmavaling',
     imageUrl: '/images/kohilavihm.webp',
     date: 'juuni 2026',
-    note: 'kohila terrassil',
+    note: '',
     audioUrl: '/audio/kohila_vihm.mp3',
   },
   {
