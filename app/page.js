@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const INSTAGRAM_URL = 'https://www.instagram.com/maa.aam.official/';
 const YOUTUBE_URL = 'https://www.youtube.com/@maa.aam.official';
 
-const SLEEP_OPTIONS = [0, 15, 30, 60]; // minutit; 0 = välja lülitatud
+const SLEEP_OPTIONS = [0, 15, 30]; // minutit; 0 = välja lülitatud
 const FADE_MS = 10000; // heli vaibub viimase 10 sekundi jooksul (ei tööta iOS-is, seal heli lihtsalt peatub)
 
 const AUDIO_DATA = [
@@ -17,7 +17,7 @@ const AUDIO_DATA = [
     title: 'Matsalu rannaniidu karjakellad',
     imageUrl: '/images/matsalulambad.webp',
     date: 'juuni 2026',
-    note: '', 
+    note: '', // valikuline: lühike kirjeldus, kuvatakse pleieris
     audioUrl: '/audio/matsalu_rannaniit.mp3',
   },
   {
@@ -25,7 +25,7 @@ const AUDIO_DATA = [
     title: 'Kohila vihmavaling',
     imageUrl: '/images/kohilavihm.webp',
     date: 'juuni 2026',
-    note: '',
+    note: 'kohila terrassil',
     audioUrl: '/audio/kohila_vihm.mp3',
   },
   {
@@ -490,7 +490,7 @@ function MainContent() {
               <section>
                 <h3 className="mb-2 font-serif text-xl text-white">Mida me teeme</h3>
                 <p>
-                  Salvestan Eesti loodushelisid ise: rannaniitudel, metsades, järvede ja mere ääres. Iga heli on ühe koha ja ühe hetke jäädvustus,
+                  Salvestame Eesti loodushelisid ise: rannaniitudel, metsades, järvede ja mere ääres. Iga heli on ühe koha ja ühe hetke jäädvustus,
                   jagatud siin võimalikult puhtal kujul.
                 </p>
               </section>
